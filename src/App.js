@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { useSpring, animated } from 'react-spring';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+	const [num, setNum] = useState(1000000);
+	const props = useSpring({ val: num, from: { val: 0 } });
+
+	const randomNum = Math.floor(Math.random() * 1000000);
+
+	return (
+		<div className="App">
+			<div className="card">
+				<animated.div className="number">
+					{props.val.interpolate(val => Math.floor(val))}
+				</animated.div>
+				<button onClick={() => setNum(randomNum)}>Random Number</button>
+			</div>
+		</div>
+	);
+};
 
 export default App;
